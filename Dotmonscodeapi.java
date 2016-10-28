@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
+package test;
 
 /**
  *
@@ -15,22 +15,21 @@ import java.io.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.security.MessageDigest;
-import java.util.Map;
 import java.util.Random;
 
 public class Dotmonscodeapi {
 
-    static Statement st;
-    static Connection cnn = getconnection();
-    static Random ran;
-    static int rand = 0;
-    static java.util.ArrayList<String> vec = new java.util.ArrayList<>();
-    static String driver = "jdbc:mysql://localhost:3306/leadsway";
-    static String user = "root";
-    static String password = "tiger";
+     Statement st;
+     //Connection getconnection() = getconnection();
+     Random ran;
+     int rand = 0;
+     java.util.ArrayList<String> vec = new java.util.ArrayList<>();
+     String driver = "jdbc:mysql://hostname/database";
+     String user = "root";
+     String password = "password";
     
     
-    public static Connection getconnection()
+    public  Connection getconnection()
     {
        Connection cn=null;
        try
@@ -59,7 +58,7 @@ public class Dotmonscodeapi {
         }
     } 
 
-    public static String timenow() {
+    public  String timenow() {
         Calendar cd = Calendar.getInstance();
         int sec = (cd.get(Calendar.SECOND));
         int min = (cd.get(Calendar.MINUTE));
@@ -68,7 +67,7 @@ public class Dotmonscodeapi {
         return (zero(hr)) + ":" + (zero(min)) + ":" + (zero(sec));
     }
 
-    public static String datenow() {
+    public  String datenow() {
         Calendar cd = Calendar.getInstance();
         int sec = (cd.get(Calendar.MONTH) + 1);
         int min = (cd.get(Calendar.DAY_OF_MONTH));
@@ -76,7 +75,7 @@ public class Dotmonscodeapi {
         return (zero(min)) + "-" + (month(Integer.parseInt(zero(sec)))) + "-" + (zero(hr));
     }
 
-    public static String datenoformat() {
+    public  String datenoformat() {
         Calendar cd = Calendar.getInstance();
         int sec = (cd.get(Calendar.MONTH) + 1);
         int min = (cd.get(Calendar.DAY_OF_MONTH));
@@ -84,12 +83,12 @@ public class Dotmonscodeapi {
         return (zero(hr)) + "-" + (zero(sec)) + "-" + (zero(min));
     }
 
-    public static String zero(int num) {
+    public  String zero(int num) {
         String number = (num < 10) ? ("0" + num) : ("" + num);
         return number;
     }
 
-    public static String month(int num) {
+    public  String month(int num) {
         switch (num) {
             case 1:
                 return "JAN";
@@ -120,7 +119,7 @@ public class Dotmonscodeapi {
         }
     }
 
-    /*public static boolean closeconnection(Connection cn)
+    /*public  boolean closeconnection(Connection cn)
     {
        try
         {
@@ -135,7 +134,7 @@ public class Dotmonscodeapi {
    
      * 
      */
-    public static void writeToFileByLine(String filename, String[] data) {
+    public  void writeToFileByLine(String filename, String[] data) {
 
         BufferedWriter bufferedWriter = null;
 
@@ -171,7 +170,7 @@ public class Dotmonscodeapi {
         }
     }
 
-    public static String fileinputstream(String input)//where input represents the path of the file to be used
+    public  String fileinputstream(String input)//where input represents the path of the file to be used
     {
         FileInputStream filea;
         byte bytearray[];
@@ -194,7 +193,7 @@ public class Dotmonscodeapi {
 
     }
 
-    public static void fileoutputstream(String input, String location)//In here, input represents the path for output files.
+    public  void fileoutputstream(String input, String location)//In here, input represents the path for output files.
     {
         try {
             byte value[] = input.getBytes();
@@ -207,7 +206,7 @@ public class Dotmonscodeapi {
 
     }
 
-    public static void fileSender(InputStream inStream, OutputStream outStream) {
+    public  void fileSender(InputStream inStream, OutputStream outStream) {
         try {
 
             byte[] buffer = new byte[1024];
@@ -230,7 +229,7 @@ public class Dotmonscodeapi {
         }
     }
 
-    public static boolean isNumber(String tt) {
+    public  boolean isNumber(String tt) {
         String dat[] = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "0",};
 
         for (int i = 0; i <= 9; i++) {
@@ -241,12 +240,12 @@ public class Dotmonscodeapi {
         return false;
     }
 
-    public static Object getImage(String reg, String table) {
+    public  Object getImage(String reg, String table) {
 
         Object rr = "";
         try {
             String stg = "select * from " + table + " where regid = " + reg;
-            Connection cn = cnn;
+            Connection cn = getconnection();
             ResultSet rs;
             st = cn.createStatement();
             rs = st.executeQuery(stg);
@@ -260,11 +259,11 @@ public class Dotmonscodeapi {
         return rr;
     }
 
-    public static boolean isExist(String regid, String table, String id) {
+    public  boolean isExist(String regid, String table, String id) {
         String stg = "";
         try {
             stg = "SELECT " + regid + " from " + table + " where " + regid + " = '" + id + "'";
-            Connection cn = cnn;
+            Connection cn = getconnection();
             ResultSet rs;
             st = cn.createStatement();
             rs = st.executeQuery(stg);
@@ -282,11 +281,11 @@ java.util.logging.Logger.getLogger(Dotmonscodeapi.class.getName()).log(java.util
         return false;
     }
 
-    public static boolean isExist(String regid, String table, String id, String reg) {
+    public  boolean isExist(String regid, String table, String id, String reg) {
         String stg = "";
         try {
             stg = "SELECT " + regid + " from " + table + " where " + reg + " = '" + id + "'";
-            Connection cn = cnn;
+            Connection cn = getconnection();
             ResultSet rs;
             st = cn.createStatement();
             rs = st.executeQuery(stg);
@@ -306,11 +305,11 @@ java.util.logging.Logger.getLogger(Dotmonscodeapi.class.getName()).log(java.util
 
     
     
-    public static boolean deleteItem(String table, String pritable, String id) {
+    public  boolean deleteItem(String table, String pritable, String id) {
         String stg = "";
         try {
             stg = "delete from " + table + " where " + pritable + " = '" + id + "'";
-            Connection cn = cnn;
+            Connection cn = getconnection();
             st = cn.createStatement();
             st.execute(stg);
             st.close();
@@ -322,11 +321,11 @@ java.util.logging.Logger.getLogger(Dotmonscodeapi.class.getName()).log(java.util
         }
     }
 
-    public static boolean update(String table, String field, String value, String id, String prifield) {
+    public  boolean update(String table, String field, String value, String id, String prifield) {
         String stg = "";
         try {
             stg = "UPDATE " + table + " set " + field + " = '" + value + "' where " + id + " = '" + prifield + "'";
-            Connection cn = cnn;
+            Connection cn = getconnection();
             st = cn.createStatement();
             st.executeUpdate(stg);
             st.close();
@@ -337,12 +336,12 @@ java.util.logging.Logger.getLogger(Dotmonscodeapi.class.getName()).log(java.util
         }
     }
 //
-//    public static void main(String[] args) {
+//    public  void main(String[] args) {
 //        Dotmonscodeapi a = new Dotmonscodeapi();
 //        System.out.println(a.convertToPasswordHash("adeoye"));
 //    }
 
-    public static java.util.ArrayList selectSomeElements(java.util.ArrayList arrList, String table) {
+    public  java.util.ArrayList selectSomeElements(java.util.ArrayList arrList, String table) {
 
         String stg = "";
         String sst = "";
@@ -356,7 +355,7 @@ java.util.logging.Logger.getLogger(Dotmonscodeapi.class.getName()).log(java.util
         stg += arrList.get(arrList.size() - 1);
         try {
             sst += "SELECT " + stg + " FROM " + table;
-            Connection cn = cnn;
+            Connection cn = getconnection();
             ResultSet rs;
             st = cn.createStatement();
             rs = st.executeQuery(sst);
@@ -374,12 +373,12 @@ java.util.logging.Logger.getLogger(Dotmonscodeapi.class.getName()).log(java.util
         return externalArrayList;
     }
 
-    public static int getSize(String sql, String field) {
+    public  int getSize(String sql, String field) {
         int jj = 0;
         java.util.ArrayList arr = new java.util.ArrayList();
 
         try {
-            Connection cn = cnn;
+            Connection cn = getconnection();
             ResultSet rs;
             st = cn.createStatement();
             rs = st.executeQuery(sql);
@@ -396,14 +395,14 @@ java.util.logging.Logger.getLogger(Dotmonscodeapi.class.getName()).log(java.util
         return arr.size();
     }
 
-    public static java.util.ArrayList selectSql(String sql, String field) {
+    public  java.util.ArrayList selectSql(String sql, String field) {
 
         int jj = 0;
         java.util.ArrayList arr = new java.util.ArrayList();
 
         try {
             ResultSet rs;
-            st = cnn.createStatement();
+            st = getconnection().createStatement();
             rs = st.executeQuery(sql);
             while (rs.next()) {//System.out.println(rs.getString(++jj))
                 arr.add(rs.getString(field));
@@ -412,20 +411,20 @@ java.util.logging.Logger.getLogger(Dotmonscodeapi.class.getName()).log(java.util
             st.close();
             // closeconnection(cn);
         } catch (Exception e1) {
-            System.out.println("Operation Unsuccessful select sql = " + sql);
+            System.out.println("Operation Unsuccessful select sql => " + sql);
             System.out.println("Submit = " + e1);
         }
         return arr;
     }
 
-    public static boolean isExecuteSql(String sql) {
+    public  boolean isExecuteSql(String sql) {
         
         int jj = 0;
         java.util.ArrayList arr = new java.util.ArrayList();
 
         try {
             ResultSet rs;
-            st = cnn.createStatement();
+            st = getconnection().createStatement();
             rs = st.executeQuery(sql);
             st.close();
             return true;
@@ -439,7 +438,7 @@ java.util.logging.Logger.getLogger(Dotmonscodeapi.class.getName()).log(java.util
     }
     
 
-    public static java.util.ArrayList selectElementAsc(String sta[], String table, String field1, String field2, int obj) {
+    public  java.util.ArrayList selectElementAsc(String sta[], String table, String field1, String field2, int obj) {
 
         String stg = "";
         String sst = "";
@@ -454,7 +453,7 @@ java.util.logging.Logger.getLogger(Dotmonscodeapi.class.getName()).log(java.util
         stg += sta[sta.length - 1];
         try {
             sst += "SELECT " + stg + " FROM " + table + " order by " + field1 + " asc";
-            Connection cn = cnn;
+            Connection cn = getconnection();
             ResultSet rs;
             st = cn.createStatement();
             rs = st.executeQuery(sst);
@@ -477,7 +476,7 @@ java.util.logging.Logger.getLogger(Dotmonscodeapi.class.getName()).log(java.util
         return arr2;
     }
 
-    public static java.util.ArrayList selectSomeElementAsc(String sta[], String table, String field1) {
+    public  java.util.ArrayList selectSomeElementAsc(String sta[], String table, String field1) {
 
         String stg = "";
         String sst = "";
@@ -491,7 +490,7 @@ java.util.logging.Logger.getLogger(Dotmonscodeapi.class.getName()).log(java.util
         stg += sta[sta.length - 1];
         try {
             sst += "SELECT " + stg + " FROM " + table + " order by " + field1 + " asc";
-            Connection cn = cnn;
+            Connection cn = getconnection();
             ResultSet rs;
             st = cn.createStatement();
             rs = st.executeQuery(sst);
@@ -509,7 +508,7 @@ java.util.logging.Logger.getLogger(Dotmonscodeapi.class.getName()).log(java.util
         return arr1;
     }
 
-    public static java.util.ArrayList selectElementById(String sta[], String table, String idfield, String id) {
+    public  java.util.ArrayList selectElementById(String sta[], String table, String idfield, String id) {
 
         String stg = "";
         String sst = "";
@@ -523,7 +522,7 @@ java.util.logging.Logger.getLogger(Dotmonscodeapi.class.getName()).log(java.util
         j = 0;
         try {
             sst += "SELECT " + stg + " FROM " + table + " where " + idfield + " = '" + id + "'";//select ekno from corper where posted = 0
-            Connection cn = cnn;
+            Connection cn = getconnection();
             ResultSet rs;
             st = cn.createStatement();
             rs = st.executeQuery(sst);
@@ -547,7 +546,7 @@ java.util.logging.Logger.getLogger(Dotmonscodeapi.class.getName()).log(java.util
         return arr;
     }
 
-    public static boolean updateAllElements(String sta[], String table, String val[], String id, String prifield) {
+    public  boolean updateAllElements(String sta[], String table, String val[], String id, String prifield) {
         String stg = "";
         String sst = "";
         int j = 0;
@@ -560,7 +559,7 @@ java.util.logging.Logger.getLogger(Dotmonscodeapi.class.getName()).log(java.util
 
         try {
             sst += "update " + table + " set " + stg + " where " + id + " = '" + prifield + "'";
-            Connection cn = cnn;
+            Connection cn = getconnection();
             st = cn.createStatement();
             st.executeUpdate(sst);
             st.close();
@@ -573,7 +572,7 @@ java.util.logging.Logger.getLogger(Dotmonscodeapi.class.getName()).log(java.util
         }
     }
 
-    public static boolean insertAllElement(java.util.ArrayList dblist, String table)//, String table, String idfield, String id)
+    public  boolean insertAllElement(java.util.ArrayList dblist, String table)//, String table, String idfield, String id)
     {
         String stg = "";
         String sst = "";
@@ -587,7 +586,7 @@ java.util.logging.Logger.getLogger(Dotmonscodeapi.class.getName()).log(java.util
         sst = sst.toUpperCase();
 
         try {
-            Connection cn = cnn;
+            Connection cn = getconnection();
             st = cn.createStatement();
             st.execute(sst);
             st.close();
@@ -600,13 +599,13 @@ java.util.logging.Logger.getLogger(Dotmonscodeapi.class.getName()).log(java.util
         return false;
     }
 
-    public static boolean insertAllSingleElement(String sta[], String table, int size)//, String table, String idfield, String id)
+    public  boolean insertAllSingleElement(String sta[], String table, int size)//, String table, String idfield, String id)
     {
         String stg = "";
         String sst = "";
 
         try {
-            Connection cn = cnn;
+            Connection cn = getconnection();
             st = cn.createStatement();
             // System.out.println("Length = " + sta.length);
             for (int i = 0; i < size; i++) {
@@ -626,13 +625,13 @@ java.util.logging.Logger.getLogger(Dotmonscodeapi.class.getName()).log(java.util
         return false;
     }
 
-    public static boolean insertZonalElement(String sta[], String table, int size)//, String table, String idfield, String id)
+    public  boolean insertZonalElement(String sta[], String table, int size)//, String table, String idfield, String id)
     {
         String stg = "";
         String sst = "";
 
         try {
-            Connection cn = cnn;
+            Connection cn = getconnection();
             st = cn.createStatement();
             // System.out.println("Length = " + sta.length);
             for (int i = 0; i < size; i++) {
@@ -652,13 +651,13 @@ java.util.logging.Logger.getLogger(Dotmonscodeapi.class.getName()).log(java.util
         return false;
     }
 
-    public static boolean insertAllSingleElements(String sta[], String table, int size)//, String table, String idfield, String id)
+    public  boolean insertAllSingleElements(String sta[], String table, int size)//, String table, String idfield, String id)
     {
         String stg = "";
         String sst = "";
 
         try {
-            Connection cn = cnn;
+            Connection cn = getconnection();
             st = cn.createStatement();
             System.out.println("Length = " + sta.length);
             for (int i = 0; i < size; i++) {
@@ -678,7 +677,7 @@ java.util.logging.Logger.getLogger(Dotmonscodeapi.class.getName()).log(java.util
         return false;
     }
 
-    public static String convertToPasswordHash(String password) {
+    public  String convertToPasswordHash(String password) {
 
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
@@ -697,13 +696,13 @@ java.util.logging.Logger.getLogger(Dotmonscodeapi.class.getName()).log(java.util
         return "";
     }
 
-    public static String getRandomize() {
+    public  String getRandomize() {
 
         rand = ran.nextInt(vec.size());
         return vec.get(rand);  //ran.nextInt(9);
     }
 
-    public static String getRandomPassword() {
+    public  String getRandomPassword() {
         ran = new Random();
         String rander = "";
         for (int i = 48; i <= 122; i++) {
@@ -722,7 +721,7 @@ java.util.logging.Logger.getLogger(Dotmonscodeapi.class.getName()).log(java.util
 
     //Uncomment setSession, killSession, and getSessionUsername when running web page container
     
-//    public static void setSession(String sessionName, String sessionValue) {
+//    public  void setSession(String sessionName, String sessionValue) {
 //
 //        try {
 //            session.put(sessionName, sessionValue);
@@ -732,7 +731,7 @@ java.util.logging.Logger.getLogger(Dotmonscodeapi.class.getName()).log(java.util
 //        }
 //    }
 //
-//    public static void killSession(String sessionName) {
+//    public  void killSession(String sessionName) {
 //        try {
 //            session.remove(sessionName);
 //        } catch (Exception exception) {
@@ -740,7 +739,7 @@ java.util.logging.Logger.getLogger(Dotmonscodeapi.class.getName()).log(java.util
 //        }
 //    }
 //
-//    public static String getSessionUsername() {
+//    public  String getSessionUsername() {
 //        try {
 //            return session.get("username").toString();
 //        } catch (Exception exception) {
@@ -749,11 +748,11 @@ java.util.logging.Logger.getLogger(Dotmonscodeapi.class.getName()).log(java.util
 //        }
 //    }
 
-    public static java.util.ArrayList selectSomeElementsWithQuery(java.util.ArrayList arrList, String sql) {
+    public  java.util.ArrayList selectSomeElementsWithQuery(java.util.ArrayList arrList, String sql) {
 
         java.util.ArrayList externalArrayList = new java.util.ArrayList<>();
         try {
-            Connection cn = cnn;
+            Connection cn = getconnection();
             ResultSet rs;
             st = cn.createStatement();
             rs = st.executeQuery(sql);
@@ -771,7 +770,7 @@ java.util.logging.Logger.getLogger(Dotmonscodeapi.class.getName()).log(java.util
         return externalArrayList;
     }
 
-    public static int getLastDate() {
+    public  int getLastDate() {
         Calendar calendar = Calendar.getInstance();
         int lastDate = calendar.getActualMaximum(Calendar.DATE);
         calendar.set(Calendar.DATE, lastDate);
